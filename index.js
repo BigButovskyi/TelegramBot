@@ -67,7 +67,7 @@ let lectionsList = [
 ];
 
 bot.onText(/\/start/, function (msg, match) {
-    let userID = msg.chat.id;
+    let userID = msg.from.id;
     bot.sendMessage(userID, '😱😱😱😱 !WOW WOW WOW! 😱😱😱😱');
     setTimeout(() => {
         bot.sendMessage(userID, 'Who do I see 😀')
@@ -80,7 +80,8 @@ bot.onText(/\/start/, function (msg, match) {
         '2) Subject information - included theory material, practical, oral exams and teacher contacts \n' +
         '3) Course Work \n' +
         '4) Final exams dates' +
-        '\n 🐨 Okay! So! Lets begin 🐼\n';
+        '\n 🐨 Okay! So! Lets begin 🐼\n' +
+        'Use /info command for calling me';
 
     setTimeout(() => {
         bot.sendMessage(userID, greetings1);
@@ -91,20 +92,20 @@ bot.onText(/\/start/, function (msg, match) {
 });
 
 bot.onText(/\/info/, function (msg, match) {
-    let userID = msg.chat.id;
+    let userID = msg.from.id;
     // JSON object that contains custom reply markup
     startFunction(userID, true, msg);
 
 });
 
 bot.onText(/\/help/, function (msg, match) {
-    let userID = msg.chat.id;
+    let userID = msg.from.id;
     let response = 'Hey! What`s up??? U need my help? Here I am 😏' + "\n" + "Use this list commands:\n"
         + "/info - start conversation(main command, use it always in order to begin dialog with me); \n" + "/start - see Greetings;\n" + "/help = show list of all commands"
     bot.sendMessage(userID, greetings);
 });
 bot.on('message', function (msg) {
-    let userID = msg.chat.id;
+    let userID = msg.from.id;
     switch (msg.text) {
         case commands.schedule:
             showSchedule(userID);
@@ -161,7 +162,7 @@ function showSchedule(userID) {
 
 function startFunction(userID, start = false, msg) {
     let response = (start === true) ?
-        'Hello, ' + msg.chat.first_name + "! How could I help U? 🙂" :
+        'Hello, ' + msg.from.first_name + "! How could I help U? 🙂" :
         'How could I help U?';
     const opt = {
         parse_mode: 'markdown',
